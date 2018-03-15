@@ -44,9 +44,8 @@ public class MainActivity extends AppCompatActivity {
         //initial setup of calendar
         currentDate = Calendar.getInstance().getTime();
         startDate = getStartDate(currentDate);
-        adapter = new CalendarAdapter(this, leaveDates);
-        adapter.setStartDate(startDate);
-        setDatesToCalendarView(startDate);
+        adapter = new CalendarAdapter(this, leaveDates,startDate);
+        grid.setAdapter(adapter);
         txtDate.setText(DateFormat.format("MMM-yyyy", currentDate));
 
         btnNext.setOnClickListener(new View.OnClickListener() {

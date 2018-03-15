@@ -26,15 +26,17 @@ public class CalendarAdapter extends BaseAdapter {
     Context context;
     List<String> leaveDates = new ArrayList<>();
 
-    public CalendarAdapter(Context context, List<String> leaveDates) {
+    public CalendarAdapter(Context context, List<String> leaveDates,Date startDate) {
         this.context = context;
+        this.startDate = startDate;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.leaveDates = leaveDates;
+        i=0;
     }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-        i = 0;//reset counter
+        i = 3;//reset counter
     }
 
     @Override
@@ -63,7 +65,7 @@ public class CalendarAdapter extends BaseAdapter {
         holder.ll = itemView.findViewById(R.id.grid_item);
         holder.tv = itemView.findViewById(R.id.txt_date);
 
-        if (i++ < 3)
+        if (i++ < 6)
             dt = "No Date";
         else {
             dt = (String) DateFormat.format("dd", startDate);
