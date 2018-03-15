@@ -25,18 +25,25 @@ public class CalendarAdapter extends BaseAdapter {
     LayoutInflater inflater;
     Context context;
     List<String> leaveDates = new ArrayList<>();
+    int i = 0;
+    Calendar cal = Calendar.getInstance();
+    String dt;
 
-    public CalendarAdapter(Context context, List<String> leaveDates,Date startDate) {
+    public CalendarAdapter(Context context, List<String> leaveDates, Date startDate) {
         this.context = context;
         this.startDate = startDate;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.leaveDates = leaveDates;
-        i=0;
+        i = 0;
     }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
         i = 3;//reset counter
+    }
+
+    public void setLeaveDates(List<String> leaveDates) {
+        this.leaveDates = leaveDates;
     }
 
     @Override
@@ -54,10 +61,6 @@ public class CalendarAdapter extends BaseAdapter {
         return position;
     }
 
-    int i = 0;
-    Calendar cal = Calendar.getInstance();
-    String dt;
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         holder = new ViewHolder();
@@ -73,17 +76,24 @@ public class CalendarAdapter extends BaseAdapter {
             cal.add(Calendar.DATE, 1);
             startDate = cal.getTime();
 
-            // setColorToDate(dt);
+            setColorToDate(dt);
         }
         holder.tv.setText(dt);
         return itemView;
     }
 
     private void setColorToDate(String dt) {
+        if (dt.charAt(0) == '0')
+            dt = dt.substring(1);
         if (leaveDates.contains(dt)) {
-            holder.ll.setBackgroundColor(Color.RED);
+            {
+//                holder.ll.setBackgroundColor(Color.RED);
+                holder.ll.setBackground(context.getDrawable(R.drawable.left_arrow));
+                leaveDates.remove(dt);
+            }
         } else if (i % 7 == 0 || ((i + 1) % 7 == 0))//saturday sunday
             holder.ll.setBackgroundColor(Color.GRAY);
+            //holder.ll.setBackground(context.getDrawable(R.drawable.ic_launcher_background));
         else
             holder.ll.setBackgroundColor(Color.GREEN);
     }
